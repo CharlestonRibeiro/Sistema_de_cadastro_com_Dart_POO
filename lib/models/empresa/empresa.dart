@@ -7,7 +7,7 @@ import 'package:projeto_final_poo/models/pessoa_juridica/pessoa_juridica.dart';
 import 'package:projeto_final_poo/models/telefone/telefone.dart';
 
 class Empresa {
-  var id = Uuid();
+  var id = Uuid().v4();
   String? nomeSocio;
   String? razaoSocial;
   String? nomeFantasia;
@@ -33,17 +33,5 @@ class Empresa {
     required this.tipo,
   });
 
-  map(String Function(dynamic empresa) param0) {}
-/*
- get getCnpj {
-     return _cnpj;
-  }
 
-  String setCnpj(String dado) {
-    String resul =
-        // ignore: unnecessary_string_interpolations, prefer_adjacent_string_concatenation
-        '${dado.substring(0, 1)}'+'.'+'${dado.substring(2, 4)}'+'.'+'${dado.substring(5,7)}'+'/'+'${dado.substring(8, 11)}'+'-'+'${dado.substring(12, 13)}';
-    return resul;
-  }
-  */
 }

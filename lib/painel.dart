@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, unused_import, unused_local_variable, prefer_collection_literals, non_constant_identifier_names, prefer_typing_uninitialized_variables, unnecessary_brace_in_string_interps
+// ignore_for_file: public_member_api_docs, sort_constructors_first, unused_import, unused_local_variable, prefer_collection_literals, non_constant_identifier_names, prefer_typing_uninitialized_variables, unnecessary_brace_in_string_interps, unrelated_type_equality_checks
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -29,8 +29,7 @@ class Painel {
             2 - Buscar Empresa cadastrada por CNPJ;
             3 - Buscar Empresa por CPF/CNPJ do Sócio;
             4 - Listar Empresas cadastradas em ordem alfabética (baseado na Razão Social);
-            5 - Listar Empresas cadastrada;
-            6 - Excluir uma empresa;
+            5 - Excluir uma empresa;
             0 - sair
           '''});
 
@@ -68,15 +67,8 @@ class Painel {
             buscaSociosPorCnpjOuCpf(cnpjCpfEscolha!);
           }
           break;
-        case 4:
-          if (dados.isEmpty) {
-            print('Não existem dados cadastrados');
-          } else {
-            listarDadosOrdenados();
-          }
-          break;
 
-       case 5:
+       case 4:
           if (dados.isEmpty) {
             print('Não existem dados cadastrados');
           } else {
@@ -84,11 +76,11 @@ class Painel {
           }
           break;   
 
-        case 6:
+        case 5:
           if (dados.isEmpty) {
             print('Não existem dados cadastrados');
           } else {
-            print('Digite o nome fantasia da empresa que deseja deletar');
+            print('Digite o ID da empresa que deseja deletar');
             empresaEscolha = stdin.readLineSync()!;
             deletarEmpresa(empresaEscolha!);
             dados.remove(dado);
@@ -112,11 +104,13 @@ class Painel {
     dados.add(cadastroEmpresa!);
   }
 
-  void deletarEmpresa(String nome) {
+
+
+  void deletarEmpresa(String id) {
     int cont = 0;
 
     for (var empresa in dados) {
-      if (empresa.nomeFantasia == nome) {
+      if (empresa.id == id) {
         cont = 1;
         dado = empresa;
         print('Empresa deletada com sucesso');
@@ -126,7 +120,7 @@ class Painel {
       print('Empresa não encontrada!!!');
       print('Nomes validos:');
       for (var empresa in dados) {
-        print('${empresa.nomeFantasia}');
+        print('${empresa.id}');
       }
     }
   }
@@ -183,7 +177,7 @@ class Painel {
         cont = 1;
         print('''
             EMPRESA
-              ID: ${pessoa.id.v1()}
+              ID: ${pessoa.id}
               Nome Fantasia: ${pessoa.nomeFantasia}
               Razão social: ${pessoa.razaoSocial}
               Telefone: (${pessoa.telefone?.ddd}) ${pessoa.telefone?.telefone}
@@ -226,20 +220,14 @@ class Painel {
     }
   }
 
-  void listarDadosOrdenados() {
-    List? ordenado = [];
-    for (var empresa in dados) {
-      ordenado.add(empresa.razaoSocial);
-      ordenado.sort();
-    }
-    print('Razoes sociais: \n$ordenado');
-  }
-
   void listarDados() {
+
+    dados.sort((a, b) => a.razaoSocial!.compareTo(b.razaoSocial!));
+
     for (var empresa in dados) {
       print('''
             EMPRESA
-              ID: ${empresa.id.v1()}
+              ID: ${empresa.id}
               Nome Fantasia: ${empresa.nomeFantasia}
               Razão social: ${empresa.razaoSocial}
               DDD: ${empresa.telefone?.ddd}
